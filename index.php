@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         function colocarCursor() {
             // Obtiene el textarea
@@ -13,6 +14,22 @@
             textarea.focus();
             textarea.setSelectionRange(0, 0);
         }
+
+        $(document).ready(function(){
+            $("#form").submit(function(event){
+                event.preventDefault(); // Evita la acción predeterminada del botón
+
+                let notas = $("#notas").val();
+                $.ajax({
+                    type: "POST",
+                    url: "notas.php",
+                    data: { notas: notas },
+                    success: function(response){
+                        $("#notasGuardadas").html(response);
+                    }
+                });
+            });
+        });
     </script>
 </head>
 <body>
